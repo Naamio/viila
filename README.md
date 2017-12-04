@@ -7,6 +7,9 @@
     <a href="https://twitter.com/omnijarstudio">
         <img src="https://img.shields.io/badge/contact-@omnijarstudio-blue.svg?style=flat" alt="Twitter: @omnijarstudio" />
     </a>
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat" alt="License: MIT" />
+    </a>
 </p>
 
 **Viila** is a Swift library that provides a compact and efficient way to handle filesystem tasks in Swift. It’s primarily aimed at Swift scripting and tooling, but can also be embedded in applications that need to access the file system. It's essentially a thin wrapper around the `FileManager` APIs that `Foundation` provides.
