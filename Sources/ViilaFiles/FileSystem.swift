@@ -430,7 +430,7 @@ extension ProcessInfo {
 }
 
 #if os(Linux)
-private extension ObjCBool {
+extension ObjCBool {
     var boolValue: Bool { return Bool(self) }
 }
 #endif
