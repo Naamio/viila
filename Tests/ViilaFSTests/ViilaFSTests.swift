@@ -701,7 +701,7 @@ class ViilaFSTests: XCTestCase {
 }
 
 #if !os(Linux)
-extension ViilaFilesTests {
+extension ViilaFSTests {
     func testAccessingDocumentFolder() {
         #if os(tvOS)
             XCTAssertNil(FileSystem().documentFolder, "Document folder should not be available on tvOS.")
