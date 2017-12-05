@@ -1,6 +1,6 @@
 import XCTest
-@testable import ViilaFilesTests
+@testable import ViilaFSTests
 
 XCTMain([
-    testCase(ViilaFilesTests.allTests),
+    testCase(ViilaFSTests.allTests),
 ])
