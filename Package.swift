@@ -8,27 +8,18 @@ let package = Package(
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "ViilaSystem",
-            targets: ["ViilaSystem"]),
-        .library(
-            name: "ViilaWatch",
-            targets: ["ViilaWatch"]),
+            name: "Viila",
+            targets: ["ViilaFS"]),
     ],
     dependencies: [
 
     ],
     targets: [
-         .target(
-            name: "ViilaSystem",
-            dependencies: []),
         .target(
-            name: "ViilaWatch",
+            name: "ViilaFS",
             dependencies: []),
         .testTarget(
-            name: "ViilaSystemTests",
-            dependencies: ["ViilaSystem"]),
-        .testTarget(
-            name: "ViilaWatchTests",
-            dependencies: ["ViilaWatch"])
+            name: "ViilaFSTests",
+            dependencies: ["ViilaFS"]),
     ]
 )

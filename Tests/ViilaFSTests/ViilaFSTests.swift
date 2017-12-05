@@ -1,6 +1,6 @@
 import Foundation
 import XCTest
-@testable import ViilaFiles
+@testable import ViilaFS
 
 class ViilaFilesTests: XCTestCase {
     private var folder: Folder!
