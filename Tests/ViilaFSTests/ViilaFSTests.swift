@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 @testable import ViilaFS
 
-class ViilaFilesTests: XCTestCase {
+class ViilaFSTests: XCTestCase {
     private var folder: Folder!
 
     // MARK: - XCTestCase
