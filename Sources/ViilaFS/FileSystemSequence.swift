@@ -1,11 +1,11 @@
 import Foundation
 
-/**
- *  A sequence used to iterate over file system items
- *
- *  You don't create instances of this class yourself. Instead, you can access various sequences on a `Folder`, for example
- *  containing its files and subfolders. The sequence is lazily evaluated when you perform operations on it.
- */
+/// 
+/// A sequence used to iterate over file system items
+/// 
+/// You don't create instances of this class yourself. Instead, you can access various sequences on a `Folder`, for example
+/// containing its files and subfolders. The sequence is lazily evaluated when you perform operations on it.
+/// 
 public class FileSystemSequence<T: FileSystem.Item>: Sequence where T: FileSystemIterable {
     /// The number of items contained in this sequence. Accessing this causes the sequence to be evaluated.
     public var count: Int {

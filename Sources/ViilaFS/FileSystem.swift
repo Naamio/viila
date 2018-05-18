@@ -2,24 +2,24 @@ import Foundation
 
 // MARK: - Public API
 
-/**
- *  Class that represents a file system
- *
- *  You only have to interact with this class in case you want to get a reference
- *  to a system folder (like the temporary cache folder, or the user's home folder).
- *
- *  To open other files & folders, use the `File` and `Folder` class respectively.
- */
+/// 
+/// Class that represents a file system
+/// 
+/// You only have to interact with this class in case you want to get a reference
+/// to a system folder (like the temporary cache folder, or the user's home folder).
+/// 
+/// To open other files & folders, use the `File` and `Folder` class respectively.
+/// 
 public class FileSystem {
     fileprivate let fileManager: FileManager
 
-    /**
-     *  Class that represents an item that's stored by a file system
-     *
-     *  This is an abstract base class, that has two publically initializable concrete
-     *  implementations, `File` and `Folder`. You can use the APIs available on this class
-     *  to perform operations that are supported by both files & folders.
-     */
+    /// 
+    /// Class that represents an item that's stored by a file system
+    /// 
+    /// This is an abstract base class, that has two publically initializable concrete
+    /// implementations, `File` and `Folder`. You can use the APIs available on this class
+    /// to perform operations that are supported by both files & folders.
+    /// 
     public class Item: Equatable, CustomStringConvertible {
         /// Errror type used for invalid paths for files or folders
         public enum PathError: Error, Equatable, CustomStringConvertible {
@@ -214,14 +214,14 @@ public class FileSystem {
             }
         }
         
-        /**
-         *  Rename the item
-         *
-         *  - parameter newName: The new name that the item should have
-         *  - parameter keepExtension: Whether the file should keep the same extension as it had before (defaults to `true`)
-         *
-         *  - throws: `FileSystem.Item.OperationError.renameFailed` if the item couldn't be renamed
-         */
+        /// 
+        /// Rename the item
+        /// 
+        ///  - parameter newName: The new name that the item should have
+        ///  - parameter keepExtension: Whether the file should keep the same extension as it had before (defaults to `true`)
+        /// 
+        ///  - throws: `FileSystem.Item.OperationError.renameFailed` if the item couldn't be renamed
+        /// 
         public func rename(to newName: String, keepExtension: Bool = true) throws {
             guard let parent = parent else {
                 throw OperationError.renameFailed(self)
@@ -255,13 +255,13 @@ public class FileSystem {
             }
         }
         
-        /**
-         *  Move this item to a new folder
-         *
-         *  - parameter newParent: The new parent folder that the item should be moved to
-         *
-         *  - throws: `FileSystem.Item.OperationError.moveFailed` if the item couldn't be moved
-         */
+        /// 
+        /// Move this item to a new folder
+        /// 
+        ///  - parameter newParent: The new parent folder that the item should be moved to
+        /// 
+        ///  - throws: `FileSystem.Item.OperationError.moveFailed` if the item couldn't be moved
+        /// 
         public func move(to newParent: Folder) throws {
             let newPath = newParent.path + name
             
@@ -273,13 +273,13 @@ public class FileSystem {
             }
         }
         
-        /**
-         *  Delete the item from disk
-         *
-         *  The item will be immediately deleted. If this is a folder, all of its contents will also be deleted.
-         *
-         *  - throws: `FileSystem.Item.OperationError.deleteFailed` if the item coudn't be deleted
-         */
+        /// 
+        /// Delete the item from disk
+        /// 
+        /// The item will be immediately deleted. If this is a folder, all of its contents will also be deleted.
+        /// 
+        ///  - throws: `FileSystem.Item.OperationError.deleteFailed` if the item coudn't be deleted
+        /// 
         public func delete() throws {
             do {
                 try fileManager.removeItem(atPath: path)
@@ -299,30 +299,30 @@ public class FileSystem {
         return try! Folder(path: ProcessInfo.processInfo.homeFolderPath, using: fileManager)
     }
 
-    // A reference to the folder that is the current working directory
+    /// A reference to the folder that is the current working directory
     public var currentFolder: Folder {
         return try! Folder(path: "")
     }
     
-    /**
-     *  Initialize an instance of this class
-     *
-     *  - parameter fileManager: Optionally give a custom file manager to use to perform operations
-     */
+    /// 
+    /// Initialize an instance of this class
+    /// 
+    ///  - parameter fileManager: Optionally give a custom file manager to use to perform operations
+    /// 
     public init(using fileManager: FileManager = .default) {
         self.fileManager = fileManager
     }
 
-    /**
-     *  Create a new file at a given path
-     *
-     *  - parameter path: The path at which a file should be created. If the path is missing intermediate
-     *                    parent folders, those will be created as well.
-     *
-     *  - throws: `File.Error.writeFailed`
-     *
-     *  - returns: The file that was created
-     */
+    /// 
+    /// Create a new file at a given path
+    /// 
+    ///  - parameter path: The path at which a file should be created. If the path is missing intermediate
+    ///                    parent folders, those will be created as well.
+    /// 
+    ///  - throws: `File.Error.writeFailed`
+    /// 
+    ///  - returns: The file that was created
+    /// 
     @discardableResult public func createFile(at path: String, contents: Data = Data()) throws -> File {
         let path = try fileManager.absolutePath(for: path)
 
@@ -339,16 +339,16 @@ public class FileSystem {
         }
     }
 
-    /**
-     *  Either return an existing file, or create a new one, at a given path.
-     *
-     *  - parameter path: The path for which a file should either be returned or created at. If the folder
-     *                    is missing, any intermediate parent folders will also be created.
-     *
-     *  - throws: `File.Error.writeFailed`
-     *
-     *  - returns: The file that was either created or found.
-     */
+    /// 
+    /// Either return an existing file, or create a new one, at a given path.
+    /// 
+    ///  - parameter path: The path for which a file should either be returned or created at. If the folder
+    ///                    is missing, any intermediate parent folders will also be created.
+    /// 
+    ///  - throws: `File.Error.writeFailed`
+    /// 
+    ///  - returns: The file that was either created or found.
+    /// 
     @discardableResult public func createFileIfNeeded(at path: String, contents: Data = Data()) throws -> File {
         if let existingFile = try? File(path: path, using: fileManager) {
             return existingFile
@@ -357,16 +357,16 @@ public class FileSystem {
         return try createFile(at: path, contents: contents)
     }
 
-    /**
-     *  Create a new folder at a given path
-     *
-     *  - parameter path: The path at which a folder should be created. If the path is missing intermediate
-     *                    parent folders, those will be created as well.
-     *
-     *  - throws: `Folder.Error.creatingFolderFailed`
-     *
-     *  - returns: The folder that was created
-     */
+    /// 
+    /// Create a new folder at a given path
+    /// 
+    ///  - parameter path: The path at which a folder should be created. If the path is missing intermediate
+    ///                    parent folders, those will be created as well.
+    /// 
+    ///  - throws: `Folder.Error.creatingFolderFailed`
+    /// 
+    ///  - returns: The folder that was created
+    /// 
     @discardableResult public func createFolder(at path: String) throws -> Folder {
         do {
             let path = try fileManager.absolutePath(for: path)
@@ -377,14 +377,14 @@ public class FileSystem {
         }
     }
 
-    /**
-     *  Either return an existing folder, or create a new one, at a given path
-     *
-     *  - parameter path: The path for which a folder should either be returned or created at. If the folder
-     *                    is missing, any intermediate parent folders will also be created.
-     *
-     *  - throws: `Folder.Error.creatingFolderFailed`
-     */
+    /// 
+    /// Either return an existing folder, or create a new one, at a given path
+    /// 
+    ///  - parameter path: The path for which a folder should either be returned or created at. If the folder
+    ///                    is missing, any intermediate parent folders will also be created.
+    /// 
+    ///  - throws: `Folder.Error.creatingFolderFailed`
+    /// 
     @discardableResult public func createFolderIfNeeded(at path: String) throws -> Folder {
         if let existingFolder = try? Folder(path: path, using: fileManager) {
             return existingFolder
@@ -428,12 +428,6 @@ extension ProcessInfo {
         return environment["HOME"]!
     }
 }
-
-#if os(Linux)
-extension ObjCBool {
-    var boolValue: Bool { return Bool(self) }
-}
-#endif
 
 #if !os(Linux)
 extension FileSystem {
